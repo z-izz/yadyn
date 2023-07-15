@@ -2,7 +2,11 @@ name: CD
 
 on:
   push:
-    branches: [ zi ]
+    branches:
+      - master
+    paths:
+      - '**.rb'
+      - '**.sh'
 
 jobs:
   build:
@@ -10,17 +14,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Check for modified files
-      id: check_files
-      run: |
-        echo "::set-output name=changed::$(git diff --name-only HEAD^ HEAD)"
-
-    - name: Skip if no relevant file changes
-      if: ${{ steps.check_files.outputs.changed == '' }}
-      run: |
-        echo "No relevant file changes. Skipping workflow."
-        exit 0
 
     - name: Run script
       run: |
@@ -50,7 +43,7 @@ jobs:
         draft: false
         prerelease: false
         body: |
-          This release was automatically published by GitHub Actions.
+          This release was automatically published by GitHub Actions. There is no guarantee that any code change happened in this release.
 
     - name: Upload Release Asset
       id: upload_release_asset 
