@@ -47,7 +47,7 @@ def xfce_set_wallpaper(image)
     properties = `xfconf-query -c xfce4-desktop -l`.lines.map(&:chomp)
   
     properties.each do |property|
-      next unless property.start_with?('/backdrop/')
+      next unless property.start_with?('/backdrop/') && property.include?('last-image')
       system("xfconf-query -c xfce4-desktop -p \"#{property}\" -s \"#{image}\"")
     end
 end
