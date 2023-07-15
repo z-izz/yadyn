@@ -1,4 +1,4 @@
-name: Main Workflow
+name: CD
 
 on:
   push:
@@ -11,11 +11,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup shell
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
     - name: Run script
       run: |
         chmod +x ./makedeb.sh
@@ -23,19 +18,15 @@ jobs:
 
     - name: Create tag
       id: create_tag
-      uses: actions/github-script@v4
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        script: |
-          const moment = require('moment');
-          const tag = `v${moment().format('YYYYMMDDHHmmss')}`;
-          const { data: newTag } = await github.repos.createRef({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            ref: `refs/tags/${tag}`,
-            sha: context.sha
-          });
-          return newTag.ref;
+      run: |
+        TAG_NAME=$(date +v%Y%m%d%H%M%S)
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git tag $TAG_NAME
+        echo ::set-output name=tag::${TAG_NAME}
+
+    - name: Push tag
+      run: git push origin --tags
 
     - name: Create Release
       id: create_release
@@ -43,7 +34,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.create_tag.outputs.data }}
-        release_name: Release ${{ steps.create_tag.outputs.data }}
+        tag_name: ${{ steps.create_tag.outputs.tag }}
+        release_name: Release ${{ steps.create_tag.outputs.tag }}
         draft: false
         prerelease: false
