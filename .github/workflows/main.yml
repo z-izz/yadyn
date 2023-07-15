@@ -3,7 +3,10 @@ name: CD
 on:
   push:
     branches:
-      - master
+      - zi
+    paths:
+      - '**.rb'
+      - '**.sh'
 
 jobs:
   build:
