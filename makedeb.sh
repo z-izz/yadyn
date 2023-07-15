@@ -17,7 +17,7 @@ Version: 1.1.0
 Section: utils
 Priority: optional
 Architecture: all
-Depends: ruby, procps, feh, zenity, feh | libglib2.0-bin | xfconf
+Depends: ruby, procps, zenity, feh | libglib2.0-bin | xfconf
 Maintainer: z-izz <dev@gordae.com>
 Description: Dynamic wallpaper manager for Linux
 Homepage: https://github.com/z-izz/yadyn/
