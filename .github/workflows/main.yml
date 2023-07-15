@@ -1,0 +1,49 @@
+name: Main Workflow
+
+on:
+  push:
+    branches: [ zi ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup shell
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Run script
+      run: |
+        chmod +x ./makedeb.sh
+        ./makedeb.sh
+
+    - name: Create tag
+      id: create_tag
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          const moment = require('moment');
+          const tag = `v${moment().format('YYYYMMDDHHmmss')}`;
+          const { data: newTag } = await github.repos.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: `refs/tags/${tag}`,
+            sha: context.sha
+          });
+          return newTag.ref;
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.create_tag.outputs.data }}
+        release_name: Release ${{ steps.create_tag.outputs.data }}
+        draft: false
+        prerelease: false
