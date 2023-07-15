@@ -17,37 +17,26 @@ def error(title, text)
     end
 end
 
-def set_wallpaper(mode, image)
-    desktop = ENV['XDG_CURRENT_DESKTOP']
+# probably not needed, but ruby file copying makes me go insane
+def copy_file(src, dst)
+    system("cp #{src} #{dst}")
+end
 
-    case desktop
-    when 'GNOME'
-        gnome_set_wallpaper(image)
-    when 'XFCE'
-        xfce_set_wallpaper(image)
+def info(title, text)
+    if is_installed("zenity")
+        system("zenity --info --title=\"#{title}\" --text=\"#{text}\"")
     else
-        if is_installed("feh")
-            if is_installed("pkill")
-                system("pkill -f \"feh --bg-${mode}\"")
-                system("feh --bg-#{mode} #{image}")
-            else
-                error("yadyn", "pkill isn't installed, and it is required to properly end feh!")
-            end
-        else
-            error("yadyn", "feh isn't installed, and it is required for desktop background changing!")
-        end
+        puts("#{title}: #{text}")
     end
 end
 
-def gnome_set_wallpaper(image)
-    system("gsettings set org.gnome.desktop.background picture-uri file:///#{image}")
-end
-
-def xfce_set_wallpaper(image)
-    properties = `xfconf-query -c xfce4-desktop -l`.lines.map(&:chomp)
-  
-    properties.each do |property|
-      next unless property.start_with?('/backdrop/') && property.include?('last-image')
-      system("xfconf-query -c xfce4-desktop -p \"#{property}\" -s \"#{image}\"")
+def set_wallpaper(image)
+    buffer_used_to_not_exist = true
+    if not File.exist?("/home/#{`whoami`.strip}/.yadyn-buffer.png")
+        buffer_used_to_not_exist = false
+    end
+    copy_file(image, "/home/#{`whoami`.strip}/.yadyn-buffer.png")
+    if not buffer_used_to_not_exist
+        info("yadyn", "It seems like this is your first time using yadyn. Please go to the wallpaper settings in your desktop environment and set the wallpaper to \"/home/#{`whoami`.strip}/.yadyn-buffer.png\". This will allow you to use yadyn.")
     end
 end

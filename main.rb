@@ -44,4 +44,4 @@ puts "Time: #{get_time(times[0], times[1], times[2], times[3], times[4])}"
 
 puts
 puts "Setting wallpaper to #{image_format.sub("%", "#{get_time(times[0], times[1], times[2], times[3], times[4])}")}..."
-set_wallpaper(feh_mode, image_format.sub("%", "#{get_time(times[0], times[1], times[2], times[3], times[4])}"))
+set_wallpaper(image_format.sub("%", "#{get_time(times[0], times[1], times[2], times[3], times[4])}"))
