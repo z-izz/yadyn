@@ -38,3 +38,14 @@ jobs:
         release_name: Release ${{ steps.create_tag.outputs.tag }}
         draft: false
         prerelease: false
+
+    - name: Upload Release Asset
+      id: upload_release_asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ./yadyn.deb
+        asset_name: yadyn.deb
+        asset_content_type: application/octet-stream
