@@ -11,6 +11,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Check for modified files
+      id: check_files
+      run: |
+        echo "::set-output name=changed::$(git diff --name-only HEAD^ HEAD)"
+
+    - name: Skip if no relevant file changes
+      if: ${{ steps.check_files.outputs.changed == '' }}
+      run: |
+        echo "No relevant file changes. Skipping workflow."
+        exit 0
+
     - name: Run script
       run: |
         chmod +x ./makedeb.sh
@@ -38,6 +49,8 @@ jobs:
         release_name: Release ${{ steps.create_tag.outputs.tag }}
         draft: false
         prerelease: false
+        body: |
+          This release was automatically published by GitHub Actions.
 
     - name: Upload Release Asset
       id: upload_release_asset 
