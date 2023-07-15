@@ -10,6 +10,15 @@ A dynamic wallpaper manager, written in Ruby.
 1. Download the .deb from the releases tab.
 2. Install the .deb with <code>sudo dpkg -i ~/Downloads/yadyn.deb</code>.
 3. Get or <a href="#making-wallpapers">make a dynamic wallpaper</a>
+4. <a href="#cron">Add yadyn to cron to run every hour</a>
+
+## cron
+1. Start <code>crontab -e</code>, it lets you edit what cron does.
+2. Append the following line. This line runs yadyn every hour at minute 0. Replace <code>[theme]</code> with the path to the yadyn.cfg of the theme you want.
+
+```
+0 * * * * /usr/bin/yadyn [theme] >> ~/yadyn-cron.log
+```
 
 ## Making wallpapers
 1. Gather 5 versions of your image.
