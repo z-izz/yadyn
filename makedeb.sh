@@ -9,6 +9,7 @@ mkdir yadyn/DEBIAN
 mkdir yadyn/usr
 mkdir yadyn/usr/bin
 mkdir yadyn/usr/share
+mkdir yadyn/usr/share/yadyn
 
 cat <<EOF > yadyn/DEBIAN/control
 Package: yadyn
@@ -26,13 +27,13 @@ EOF
 cp runner.sh yadyn/usr/bin/yadyn
 
 # add the ruby files
-cp *.rb yadyn/usr/share/
+cp *.rb yadyn/usr/share/yadyn
 
 # give root permissions to the dir
 sudo chown -R root:root yadyn
 sudo chmod 0755 yadyn/DEBIAN
 sudo chmod 0755 yadyn/usr/bin/*
-sudo chmod 0755 yadyn/usr/share/*
+sudo chmod 0755 yadyn/usr/share/yadyn*
 
 # build the deb
 sudo dpkg-deb --build yadyn
