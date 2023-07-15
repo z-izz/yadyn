@@ -19,12 +19,12 @@ A dynamic wallpaper manager, written in Ruby.
 
 ### XFCE
 ```
-0 * * * * export XDG_CURRENT_DESKTOP=XFCE; /usr/bin/yadyn [theme]
+0 * * * * export DISPLAY=:0; export XDG_CURRENT_DESKTOP=XFCE; /usr/bin/yadyn [theme]
 ```
 
 ### GNOME
 ```
-0 * * * * export XDG_CURRENT_DESKTOP=GNOME; /usr/bin/yadyn [theme]
+0 * * * * export DISPLAY=:0; export XDG_CURRENT_DESKTOP=GNOME; /usr/bin/yadyn [theme]
 ```
 
 ### feh (this might not work.)
@@ -32,7 +32,7 @@ A dynamic wallpaper manager, written in Ruby.
 0 * * * * export DISPLAY=:0; /usr/bin/yadyn [theme]
 ```
 
-<h6>For feh, you might also need to grant permissions for cron to connect to X.</h6>
+<h6>you might also need to grant permissions for cron to connect to X.</h6>
 
 ## Making wallpapers
 1. Gather 5 versions of your image.
