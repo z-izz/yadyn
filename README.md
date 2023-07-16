@@ -17,7 +17,7 @@ A dynamic wallpaper manager, written in Ruby.
 2. Append the following line. This line runs yadyn every hour at minute 0. Replace <code>[theme]</code> with the path to the yadyn.cfg of the theme you want.
 
 ```
-0 * * * * /usr/bin/yadyn [theme] >> ~/yadyn-cron.log
+0 * * * * /usr/bin/yadyn [theme] > ~/yadyn-cron.log
 ```
 
 ## Making wallpapers
