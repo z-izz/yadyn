@@ -4,8 +4,6 @@
 
 A dynamic wallpaper manager, written in Ruby.
 
-<h6>disclaimer: only compatible with Gnome, XFCE, and feh-based wallpaper renderers</h6>
-
 ## How to install & use
 1. Download the .deb from the releases tab.
 2. Install the .deb with <code>sudo dpkg -i ~/Downloads/yadyn.deb</code>.
