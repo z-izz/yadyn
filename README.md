@@ -32,10 +32,6 @@ This is an example yadyn.cfg.
 # the image format for the names. % is replaced with the stage of day
 # 0 = midnight, 1 = morning, 2 = afternoon, 3 = evening, 4 = night.
 format=/path/to/wallpaper/folder/image_%.png
-# how feh will fit the backgrounds.
-# fitting modes: center, fill, max, scale, tile
-# THIS IS ONLY FOR FEH!!! THIS WILL NOT DO ANYTHING ON GNOME/XFCE!!!!!!
-fitting_mode=tile
 
 [stage]
 # which hour will be the stage of day
