@@ -26,7 +26,6 @@ end
 config = IniParser.new(filename)
 
 image_format = config.getValue("bg", "format")
-feh_mode = config.getValue("bg", "fitting_mode")
 
 times = [
   config.getValue("stage", "midnight"),
@@ -38,7 +37,6 @@ times = [
 
 
 puts "Image format: #{image_format}"
-puts "feh mode: #{feh_mode}"
 puts "Times: #{times.join(', ')}"
 puts "Time: #{get_time(times[0], times[1], times[2], times[3], times[4])}"
 
